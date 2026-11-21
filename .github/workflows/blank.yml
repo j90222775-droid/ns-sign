@@ -1,20 +1,24 @@
 name: nodeseek鸡腿签到
 
+
 on:
   push:
     branches:
       - main
   schedule:
-    - cron: '00 16 * * *'  # 北京时间 00:00 (UTC+8)，对应UTC时间 16:00
+    - cron: '05 16 * * *'→ Runs at 16:00  # 北京时间 00:00 (UTC+8)，对应UTC时间 16:00
   workflow_dispatch:
+
 
 permissions:
   contents: read
   actions: write  # 添加写入Actions变量的权限
 
+
 jobs:
   run-nodeseek-sign:
     runs-on: ubuntu-latest
+
 
     steps:
       - name: 检出代码仓库
@@ -25,9 +29,11 @@ jobs:
         with:
           python-version: '3.11.8'
 
+
       - name: 安装依赖包
         run: |
           pip install curl_cffi requests
+
 
       - name: 运行签到脚本
         env:
@@ -62,5 +68,3 @@ jobs:
           # 通知推送配置
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
-          TG_THREAD_ID: ${{ secrets.TG_THREAD_ID }}
-        run: python nodeseek_sign.py
